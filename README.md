@@ -1,59 +1,285 @@
-<p align="center"><a href="https://laravel.com" target="_blank"><img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400" alt="Laravel Logo"></a></p>
+#  PHP_Laravel12_Schedule_Monitor
 
-<p align="center">
-<a href="https://github.com/laravel/framework/actions"><img src="https://github.com/laravel/framework/workflows/tests/badge.svg" alt="Build Status"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/dt/laravel/framework" alt="Total Downloads"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/v/laravel/framework" alt="Latest Stable Version"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/l/laravel/framework" alt="License"></a>
-</p>
+![Laravel](https://img.shields.io/badge/Laravel-12-red)
+![PHP](https://img.shields.io/badge/PHP-8%2B-blue)
+![MySQL](https://img.shields.io/badge/Database-MySQL-orange)
+![Spatie](https://img.shields.io/badge/Package-Spatie%20Schedule%20Monitor-green)
 
-## About Laravel
+---
 
-Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel takes the pain out of development by easing common tasks used in many web projects, such as:
+##  Overview
 
-- [Simple, fast routing engine](https://laravel.com/docs/routing).
-- [Powerful dependency injection container](https://laravel.com/docs/container).
-- Multiple back-ends for [session](https://laravel.com/docs/session) and [cache](https://laravel.com/docs/cache) storage.
-- Expressive, intuitive [database ORM](https://laravel.com/docs/eloquent).
-- Database agnostic [schema migrations](https://laravel.com/docs/migrations).
-- [Robust background job processing](https://laravel.com/docs/queues).
-- [Real-time event broadcasting](https://laravel.com/docs/broadcasting).
+**PHP_Laravel12_Schedule_Monitor** is a Laravel 12 project that demonstrates how to monitor Laravel scheduled tasks using the **Spatie Schedule Monitor** package.
 
-Laravel is accessible, powerful, and provides tools required for large, robust applications.
+The system tracks and logs scheduler execution details including:
 
-## Learning Laravel
+* Execution time
+* Success / failure status
+* Missed schedules
+* Runtime history
 
-Laravel has the most extensive and thorough [documentation](https://laravel.com/docs) and video tutorial library of all modern web application frameworks, making it a breeze to get started with the framework. You can also check out [Laravel Learn](https://laravel.com/learn), where you will be guided through building a modern Laravel application.
+This setup is designed for a **Windows (XAMPP)** development environment using a **MySQL database**.
 
-If you don't feel like reading, [Laracasts](https://laracasts.com) can help. Laracasts contains thousands of video tutorials on a range of topics including Laravel, modern PHP, unit testing, and JavaScript. Boost your skills by digging into our comprehensive video library.
+---
 
-## Laravel Sponsors
+##  Features
 
-We would like to extend our thanks to the following sponsors for funding Laravel development. If you are interested in becoming a sponsor, please visit the [Laravel Partners program](https://partners.laravel.com).
+*  Laravel 12 Scheduler Monitoring
+*  Spatie Schedule Monitor Integration
+*  Automatic Task Logging
+*  Execution Status Tracking
+*  Missed Schedule Detection
+*  Runtime History Storage
+*  MySQL Database Support
+*  Windows (XAMPP) Compatible
 
-### Premium Partners
+---
 
-- **[Vehikl](https://vehikl.com)**
-- **[Tighten Co.](https://tighten.co)**
-- **[Kirschbaum Development Group](https://kirschbaumdevelopment.com)**
-- **[64 Robots](https://64robots.com)**
-- **[Curotec](https://www.curotec.com/services/technologies/laravel)**
-- **[DevSquad](https://devsquad.com/hire-laravel-developers)**
-- **[Redberry](https://redberry.international/laravel-development)**
-- **[Active Logic](https://activelogic.com)**
+##  Folder Structure
 
-## Contributing
+```
+PHP_Laravel12_Schedule_Monitor/
+│
+├── app/
+│   └── Console/
+│       └── Commands/
+│           └── TestSchedulerCommand.php
+│
+├── config/
+│   └── schedule-monitor.php
+│
+├── database/
+│   └── migrations/
+│
+├── routes/
+│   └── console.php
+│
+├── .env
+└── README.md
+```
 
-Thank you for considering contributing to the Laravel framework! The contribution guide can be found in the [Laravel documentation](https://laravel.com/docs/contributions).
+---
 
-## Code of Conduct
+##  Prerequisites
 
-In order to ensure that the Laravel community is welcoming to all, please review and abide by the [Code of Conduct](https://laravel.com/docs/contributions#code-of-conduct).
+Make sure the following are installed:
 
-## Security Vulnerabilities
+* PHP 8+
+* Composer
+* Laravel CLI
+* MySQL
+* XAMPP (Windows Environment)
 
-If you discover a security vulnerability within Laravel, please send an e-mail to Taylor Otwell via [taylor@laravel.com](mailto:taylor@laravel.com). All security vulnerabilities will be promptly addressed.
+---
 
-## License
+##  Installation & Setup
 
-The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
+### STEP 1 — Create Laravel Project
+
+```bash
+composer create-project laravel/laravel PHP_Laravel12_Schedule_Monitor
+```
+
+Run server:
+
+```bash
+php artisan serve
+```
+
+---
+
+### STEP 2 — Configure Database
+
+Edit `.env` file:
+
+```env
+DB_CONNECTION=mysql
+DB_HOST=127.0.0.1
+DB_PORT=3306
+DB_DATABASE=schedule
+DB_USERNAME=root
+DB_PASSWORD=
+```
+
+---
+
+### STEP 3 — Install Schedule Monitor Package
+
+```bash
+composer require spatie/laravel-schedule-monitor
+```
+
+---
+
+### STEP 4 — Publish Package Files
+
+```bash
+php artisan vendor:publish --provider="Spatie\ScheduleMonitor\ScheduleMonitorServiceProvider"
+```
+
+This publishes:
+
+* `config/schedule-monitor.php`
+* database migrations
+
+---
+
+### STEP 5 — Run Migration
+
+```bash
+php artisan migrate
+```
+
+Tables created:
+
+* `monitored_scheduled_tasks`
+* `monitored_scheduled_task_log_items`
+
+---
+
+### STEP 6 — Create Test Scheduler Command
+
+```bash
+php artisan make:command TestSchedulerCommand
+```
+
+**app/Console/Commands/TestSchedulerCommand.php**
+
+```php
+<?php
+
+namespace App\Console\Commands;
+
+use Illuminate\Console\Command;
+
+class TestSchedulerCommand extends Command
+{
+    protected $signature = 'test:scheduler';
+    protected $description = 'Test schedule monitor command';
+
+    public function handle()
+    {
+        \Log::info('Scheduler executed at '.now());
+
+        $this->info('Scheduler Working Successfully');
+
+        return Command::SUCCESS;
+    }
+}
+```
+
+---
+
+### STEP 7 — Register Scheduler (Laravel 12 Safe Method)
+
+Edit:
+
+```
+routes/console.php
+```
+
+```php
+<?php
+
+use Illuminate\Support\Facades\Artisan;
+use Illuminate\Support\Facades\Schedule;
+use Illuminate\Console\Scheduling\Event;
+
+Artisan::command('test:scheduler', function () {
+    $this->info('Scheduler running at '.now());
+});
+
+$schedule = Schedule::command('test:scheduler')
+    ->everyMinute();
+
+if (method_exists(Event::class, 'monitor')) {
+    $schedule->monitor();
+}
+```
+
+---
+
+### STEP 8 — Clear Cache
+
+```bash
+php artisan optimize:clear
+```
+
+---
+
+### STEP 9 — Sync Scheduler with Monitor
+
+```bash
+php artisan schedule-monitor:sync
+```
+
+Expected output:
+
+```
+All done! Now monitoring 1 scheduled tasks.
+```
+<img width="858" height="217" alt="Screenshot 2026-02-23 173430" src="https://github.com/user-attachments/assets/75c04498-dd95-44ef-ac7f-6016edecfada" />
+
+---
+
+### STEP 10 — View Monitored Tasks
+
+```bash
+php artisan schedule-monitor:list
+```
+
+Example output:
+
+```
+test:scheduler (command) Every minute
+Started at: --
+Finished at: --
+```
+<img width="1572" height="126" alt="Screenshot 2026-02-23 173822" src="https://github.com/user-attachments/assets/89a212d8-01b9-4cf2-987e-46eb13fdc14f" />
+
+---
+
+### STEP 11 — Run Scheduler Manually
+
+```bash
+php artisan schedule:run
+```
+
+Output:
+
+```
+Running ["artisan" test:scheduler] DONE
+```
+<img width="1075" height="72" alt="Screenshot 2026-02-23 173438" src="https://github.com/user-attachments/assets/570352b3-a1b5-425d-bab6-562bf0bcf314" />
+
+---
+
+### STEP 12 — Verify Monitoring
+
+Run again:
+
+```bash
+php artisan schedule-monitor:list
+```
+
+Now shows:
+
+```
+Started at: 2026-02-23 XX:XX:XX
+Finished at: 2026-02-23 XX:XX:XX
+```
+<img width="1564" height="137" alt="Screenshot 2026-02-23 173446" src="https://github.com/user-attachments/assets/4ea5ac09-d5b8-4476-b737-a543635cea40" />
+
+---
+
+##  Useful Commands
+
+| Command                             | Description            |
+| ----------------------------------- | ---------------------- |
+| `php artisan schedule:run`          | Run scheduler manually |
+| `php artisan schedule-monitor:list` | Show monitored tasks   |
+| `php artisan schedule-monitor:sync` | Sync schedules         |
+| `php artisan optimize:clear`        | Clear caches           |
+
+---
+
