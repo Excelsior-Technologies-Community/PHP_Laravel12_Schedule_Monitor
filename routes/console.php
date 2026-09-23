@@ -1,22 +1,11 @@
 <?php
 
-use Illuminate\Support\Facades\Artisan;
 use Illuminate\Support\Facades\Schedule;
 use Illuminate\Console\Scheduling\Event;
 
 /*
 |--------------------------------------------------------------------------
-| Test Command
-|--------------------------------------------------------------------------
-*/
-
-Artisan::command('test:scheduler', function () {
-    $this->info('Scheduler running at '.now());
-});
-
-/*
-|--------------------------------------------------------------------------
-| Scheduler (SAFE FOR LARAVEL 12)
+| Scheduler
 |--------------------------------------------------------------------------
 */
 
@@ -25,7 +14,7 @@ $schedule = Schedule::command('test:scheduler')
 
 /*
 |--------------------------------------------------------------------------
-| Only attach monitor() if macro exists
+| Schedule Monitor
 |--------------------------------------------------------------------------
 */
 
