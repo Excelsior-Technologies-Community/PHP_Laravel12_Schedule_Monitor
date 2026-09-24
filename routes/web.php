@@ -19,38 +19,51 @@ Route::get('/', function () {
 |--------------------------------------------------------------------------
 */
 
-Route::prefix('schedule-monitor')->name('schedule-monitor.')->group(function () {
+Route::prefix('schedule-monitor')
+    ->name('schedule-monitor.')
+    ->group(function () {
 
-    /*
-    |--------------------------------------------------------------------------
-    | Dashboard
-    |--------------------------------------------------------------------------
-    */
+        /*
+        |--------------------------------------------------------------------------
+        | Dashboard
+        |--------------------------------------------------------------------------
+        */
 
-    Route::get('/dashboard', [
-        ScheduleMonitorController::class,
-        'dashboard'
-    ])->name('dashboard');
+        Route::get('/dashboard', [
+            ScheduleMonitorController::class,
+            'dashboard',
+        ])->name('dashboard');
 
-    /*
-    |--------------------------------------------------------------------------
-    | Execution History
-    |--------------------------------------------------------------------------
-    */
+        /*
+        |--------------------------------------------------------------------------
+        | Execution History
+        |--------------------------------------------------------------------------
+        */
 
-    Route::get('/history', [
-        ScheduleMonitorController::class,
-        'history'
-    ])->name('history');
+        Route::get('/history', [
+            ScheduleMonitorController::class,
+            'history',
+        ])->name('history');
 
-    /*
-    |--------------------------------------------------------------------------
-    | Failure & Missed Run Alerts
-    |--------------------------------------------------------------------------
-    */
+        /*
+        |--------------------------------------------------------------------------
+        | CSV Export
+        |--------------------------------------------------------------------------
+        */
 
-    Route::get('/alerts', [
-        ScheduleMonitorController::class,
-        'alerts'
-    ])->name('alerts');
-});
+        Route::get('/history/export', [
+            ScheduleMonitorController::class,
+            'exportHistory',
+        ])->name('history.export');
+
+        /*
+        |--------------------------------------------------------------------------
+        | Alerts
+        |--------------------------------------------------------------------------
+        */
+
+        Route::get('/alerts', [
+            ScheduleMonitorController::class,
+            'alerts',
+        ])->name('alerts');
+    });
